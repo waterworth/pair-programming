@@ -33,36 +33,18 @@ class QuestionList extends Component {
           return a.value - b.value;
         });
 
-        newi.forEach((element) => {
-          element.didClick = false;
-        });
-
         this.setState({
           questions: newi,
         });
       });
   }
 
-  handleClickLi = (id) => {
-    let newarr = this.state.questions;
-    console.log("did click", id)
-    newarr.forEach((element) => {
-        if(element.id === id){
-            element.didClick = true;
-        }
-    });
-
-    this.setState({
-      questions: newarr,
-    });
-  };
-
   render() {
     return (
       <div>
         <ul>
           {this.state.questions.map((data, index) => {
-            return <Card key={data.id} question={data} handleClicker={this.handleClickLi} />;
+            return <Card key={data.id} question={data} />;
           })}
         </ul>
       </div>
