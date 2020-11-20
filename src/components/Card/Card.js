@@ -3,7 +3,7 @@ import React from 'react';
 const Card = (props) => {
     return (
         <li>
-            {props.question.value} {props.question.answer}
+            {props.question.value}
         </li>
     );
 }
