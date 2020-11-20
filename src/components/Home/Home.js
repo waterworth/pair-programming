@@ -6,8 +6,9 @@ import './home.scss';
 export default class Home extends Component {
   state = {
     categories: [],
-    questions: [[]],
-    score: 0
+    score: 0,
+    currQuestion: {},
+    form: ""
   };
 
   componentDidMount() {
@@ -22,6 +23,51 @@ export default class Home extends Component {
       });
   }
 
+  updateScore = (num, RW) =>{
+    console.log(num);
+    let score = this.state.score;
+
+    if(RW){
+      score += num;
+    }else{
+      score -= num;
+    }
+
+    this.setState({
+      categories: this.state.categories,
+      questions: this.state.questions,
+      score: score
+    })
+    
+  }
+
+  handleClickQuestion = (qst) => {
+    console.log(qst);
+    this.setState({
+      questions: this.state.questions,
+      currQuestion: qst
+    });
+  };
+
+  handleFormSubmit = (e) =>{
+    e.preventDefault();
+    if(this.state.currQuestion.answer == e.target.answer.value){
+      this.updateScore(this.state.currQuestion.value, true);
+    }else{
+      this.updateScore(this.state.currQuestion.value, false);
+    }
+
+    this.setState({
+      form: ""
+    })
+  }
+
+  inputChange = (e) =>{
+    this.setState({
+      form: e.target.value
+    })
+  }
+
   render() {
     return (
       <>
@@ -29,9 +75,13 @@ export default class Home extends Component {
         <span>{this.state.score}</span>
         <main className='board'>
           {this.state.categories.map((data, index) => {
-            return <QuestionList key={data.id} category={data} />;
+            return <QuestionList key={data.id} category={data} handleScore={this.updateScore} handleClickQuestion={this.handleClickQuestion}/>;
           })}
         </main>
+        <form onSubmit={this.handleFormSubmit}>
+          <input value={this.state.form} type="text" name="answer" onChange={this.inputChange} />
+          <button type="submit">Submit</button>
+        </form>
       </>
     );
   }

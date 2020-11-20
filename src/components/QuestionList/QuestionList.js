@@ -5,7 +5,7 @@ import './QuestionList.scss';
 
 class QuestionList extends Component {
   state = {
-    questions: [],
+    questions: []
   };
 
   equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -40,26 +40,12 @@ class QuestionList extends Component {
       });
   }
 
-  handleClickLi = (id) => {
-    let newarr = this.state.questions;
-    console.log('did click', id);
-    newarr.forEach((element) => {
-      if (element.id === id) {
-        element.didClick = true;
-      }
-    });
-
-    this.setState({
-      questions: newarr,
-    });
-  };
-
   render() {
     return (
       <section className='category'>
         <h2 className='category__title'>{this.props.category.title}</h2>
         {this.state.questions.map((data, index) => {
-          return <Card key={data.id} question={data} />;
+          return <Card key={data.id} question={data} pressQuestion={this.props.handleClickQuestion} />;
         })}
       </section>
     );
