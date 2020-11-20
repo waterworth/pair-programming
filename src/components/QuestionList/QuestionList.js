@@ -18,10 +18,18 @@ class QuestionList extends Component {
       .get(`http://jservice.io/api/clues/?category=${this.props.category.id}`)
       .then((response) => {
 
+        let newi = [];
 
-        let newi = response.data.sort(function(a,b){
+        newi = response.data.filter(function(item, pos) {
+            return newi.indexOf(item) == pos;
+        }) 
+        
+        
+        newi = response.data.sort(function(a,b){
             return a.value - b.value;
           });
+
+
 
 
         this.setState({
@@ -29,11 +37,6 @@ class QuestionList extends Component {
         });
       });
   }
-
-  componentDidUpdate() {
-
-  }
-
   render() {
     return (
       <div>
