@@ -10,7 +10,7 @@ export default class Home extends Component {
   };
 
   componentDidMount() {
-    let random = Math.floor(Math.random() * 100);
+    let random = Math.floor(Math.random() * 200);
     axios
       .get(`http://jservice.io/api/categories/?count=6&offset=${random}`)
       .then((response) => {

@@ -16,8 +16,6 @@ class QuestionList extends Component {
       .then((response) => {
         let newi = response.data;
 
-        console.log(response.data);
-
         for (let i = 0; i < newi.length; i++) {
           for (let x = 0; x < newi.length; x++) {
             if (i != x && newi[i].value == newi[x].value) {
@@ -29,6 +27,12 @@ class QuestionList extends Component {
         newi = response.data.sort(function (a, b) {
           return a.value - b.value;
         });
+
+        for (let i = 0; i < newi.length; i++) {
+            if(newi[i].value === null || newi[i].value == 100 || newi[i].value === 300 || newi[i].value === 500){
+                newi.splice(i, 1);
+            }
+        }
 
         this.setState({
           questions: newi,
