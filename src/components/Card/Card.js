@@ -1,30 +1,37 @@
-import './Card.scss';
-import React, { Component } from 'react';
+import "./Card.scss";
+import React, { Component } from "react";
 
 class Card extends Component {
   state = {
-    value: '',
+    value: "",
+    notPressed: true,
   };
 
   componentDidMount() {
-    console.log('DID MOUNT');
+    console.log("DID MOUNT");
     if (this.props.question.didClick) {
       this.setState({ value: this.props.question.question });
     } else {
-      this.setState({ value: '$' + this.props.question.value });
+      this.setState({ value: "$" + this.props.question.value });
     }
   }
 
   clicking = () => {
-    this.setState({ value: this.props.question.question });
+    if (this.state.notPressed) {
+      this.setState({ value: this.props.question.question });
 
-    this.props.pressQuestion(this.props.question);
+      this.props.pressQuestion(this.props.question);
+
+      setTimeout(() => {
+        this.setState({ value: "", notPressed: false });
+      }, 5000);
+    }
   };
 
   render() {
     return (
-      <article onClick={this.clicking} className='card'>
-        <p className='card__price'>{this.state.value}</p>
+      <article onClick={this.clicking} className="card">
+        <p className="card__price">{this.state.value}</p>
       </article>
     );
   }

@@ -50,7 +50,8 @@ export default class Home extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    if (this.state.currQuestion.answer == e.target.answer.value) {
+    let realAnaswer = this.state.currQuestion.answer.replace("/", "");
+    if (realAnaswer.toLowerCase().includes(e.target.answer.value.toLowerCase())) {
       this.updateScore(this.state.currQuestion.value, true);
     } else {
       this.updateScore(this.state.currQuestion.value, false);
