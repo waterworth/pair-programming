@@ -87,13 +87,15 @@ export default class Home extends Component {
         </main>
         <form onSubmit={this.handleFormSubmit}>
           <input
-            className='home__form'
+            className='home__input'
             value={this.state.form}
             type='text'
             name='answer'
             onChange={this.inputChange}
           />
-          <button type='submit'>Submit</button>
+          <button className='home__button' type='submit'>
+            Submit
+          </button>
         </form>
       </>
     );
