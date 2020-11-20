@@ -86,6 +86,7 @@ export default class Home extends Component {
         </main>
         <form onSubmit={this.handleFormSubmit}>
           <input
+            className='home__form'
             value={this.state.form}
             type='text'
             name='answer'
