@@ -30,10 +30,6 @@ class QuestionList extends Component {
           return a.value - b.value;
         });
 
-        newi.forEach((element) => {
-          element.didClick = false;
-        });
-
         this.setState({
           questions: newi,
         });
@@ -59,13 +55,7 @@ class QuestionList extends Component {
       <section className='category'>
         <h2 className='category__title'>{this.props.category.title}</h2>
         {this.state.questions.map((data, index) => {
-          return (
-            <Card
-              key={data.id}
-              question={data}
-              handleClicker={this.handleClickLi}
-            />
-          );
+          return <Card key={data.id} question={data} />;
         })}
       </section>
     );
