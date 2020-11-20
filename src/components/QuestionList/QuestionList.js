@@ -5,45 +5,64 @@ import './QuestionList.scss';
 
 class QuestionList extends Component {
   state = {
-    questions: []
+    questions: [],
+    category: this.props.category.title
   };
 
   equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-  componentDidMount() {
+  getQuestions = (id) =>{
     axios
-      .get(`http://jservice.io/api/clues/?category=${this.props.category.id}`)
-      .then((response) => {
-        let newi = response.data;
+    .get(`http://jservice.io/api/clues/?category=${id}`)
+    .then((response) => {
+      let newi = response.data;
 
-        for (let i = 0; i < newi.length; i++) {
-          for (let x = 0; x < newi.length; x++) {
-            if (i != x && newi[i].value == newi[x].value) {
-              newi.splice(x, 1);
-            }
+      for (let i = 0; i < newi.length; i++) {
+        for (let x = 0; x < newi.length; x++) {
+          if (i != x && newi[i].value == newi[x].value) {
+            newi.splice(x, 1);
           }
         }
+      }
 
-        newi = response.data.sort(function (a, b) {
-          return a.value - b.value;
-        });
-
-        for (let i = 0; i < newi.length; i++) {
-            if(newi[i].value === null || newi[i].value == 100 || newi[i].value === 300 || newi[i].value === 500){
-                newi.splice(i, 1);
-            }
-        }
-
-        this.setState({
-          questions: newi,
-        });
+      newi = response.data.sort(function (a, b) {
+        return a.value - b.value;
       });
+
+      for (let i = 0; i < newi.length; i++) {
+          console.log(newi[i].value);
+          if(newi[i].value === null || newi[i].value == 100 || newi[i].value === 300 || newi[i].value === 500){
+              console.log("remove", newi[i].value);
+              newi.splice(i, 1);
+          }
+          else{
+              console.log("good", newi[i].value);
+          }
+      }
+
+      if(newi.length !== 5){
+          return  this.getQuestions(id+1);
+      }
+
+      this.setState({
+        questions: newi,
+        category: newi[0].category.title
+      });
+    })
+    .catch((err)=>{
+        this.getQuestions(id+1)
+    })
+  }
+
+
+  componentDidMount() {
+    this.getQuestions(this.props.category.id)
   }
 
   render() {
     return (
       <section className='category'>
-        <h2 className='category__title'>{this.props.category.title}</h2>
+        <h2 className='category__title'>{this.state.category}</h2>
         {this.state.questions.map((data, index) => {
           return <Card key={data.id} question={data} pressQuestion={this.props.handleClickQuestion} />;
         })}
