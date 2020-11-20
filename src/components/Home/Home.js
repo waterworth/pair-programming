@@ -42,7 +42,6 @@ export default class Home extends Component {
   };
 
   handleClickQuestion = (qst) => {
-    console.log(qst);
     this.setState({
       questions: this.state.questions,
       currQuestion: qst,
