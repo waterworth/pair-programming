@@ -5,7 +5,8 @@ import './QuestionList.scss';
 
 class QuestionList extends Component {
   state = {
-    questions: []
+    questions: [],
+    category: this.props.category.title
   };
 
   equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -39,8 +40,13 @@ class QuestionList extends Component {
           }
       }
 
+      if(newi.length !== 5){
+          return  this.getQuestions(id+1);
+      }
+
       this.setState({
         questions: newi,
+        category: newi[0].category.title
       });
     })
     .catch((err)=>{
@@ -56,7 +62,7 @@ class QuestionList extends Component {
   render() {
     return (
       <section className='category'>
-        <h2 className='category__title'>{this.props.category.title}</h2>
+        <h2 className='category__title'>{this.state.category}</h2>
         {this.state.questions.map((data, index) => {
           return <Card key={data.id} question={data} pressQuestion={this.props.handleClickQuestion} />;
         })}
