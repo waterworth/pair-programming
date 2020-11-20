@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import QuestionList from '../QuestionList/QuestionList';
-import './home.scss';
+import React, { Component } from "react";
+import axios from "axios";
+import QuestionList from "../QuestionList/QuestionList";
+import "./home.scss";
 
 export default class Home extends Component {
   state = {
     categories: [],
     score: 0,
     currQuestion: {},
-    form: '',
+    form: "",
+    answer: "",
   };
 
   componentDidMount() {
@@ -50,16 +51,30 @@ export default class Home extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    let realAnaswer = this.state.currQuestion.answer.replace("/", "");
-    if (realAnaswer.toLowerCase().includes(e.target.answer.value.toLowerCase())) {
-      this.updateScore(this.state.currQuestion.value, true);
-    } else {
-      this.updateScore(this.state.currQuestion.value, false);
+
+    if (this.state.currQuestion.answer) {
+      let realAnaswer = this.state.currQuestion.answer.replace("/", "");
+      if (
+        realAnaswer.toLowerCase().includes(e.target.answer.value.toLowerCase())
+      ) {
+        this.updateScore(this.state.currQuestion.value, true);
+      } else {
+        this.updateScore(this.state.currQuestion.value, false);
+        this.setState({
+          answer: this.state.currQuestion.answer,
+        });
+      }
     }
 
     this.setState({
-      form: '',
+      form: "",
     });
+
+    setTimeout(() => {
+      this.setState({
+        answer: "",
+      });
+    }, 10000);
   };
 
   inputChange = (e) => {
@@ -71,9 +86,9 @@ export default class Home extends Component {
   render() {
     return (
       <>
-        <h1 className='title'>This is Jeopardy</h1>
-        <h2 className='score'>Score: {this.state.score}</h2>
-        <main className='board'>
+        <h1 className="title">This is Jeopardy</h1>
+        <h2 className="score">Score: {this.state.score}</h2>
+        <main className="board">
           {this.state.categories.map((data, index) => {
             return (
               <QuestionList
@@ -87,16 +102,17 @@ export default class Home extends Component {
         </main>
         <form onSubmit={this.handleFormSubmit}>
           <input
-            className='home__input'
+            className="home__input"
             value={this.state.form}
-            type='text'
-            name='answer'
+            type="text"
+            name="answer"
             onChange={this.inputChange}
           />
-          <button className='home__button' type='submit'>
+          <button className="home__button" type="submit">
             Submit
           </button>
         </form>
+        <span>ANSWER: {this.state.answer}</span>
       </>
     );
   }
