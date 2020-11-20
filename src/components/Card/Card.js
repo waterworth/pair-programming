@@ -8,7 +8,6 @@ class Card extends Component {
   };
 
   componentDidMount() {
-    console.log("DID MOUNT");
     if (this.props.question.didClick) {
       this.setState({ value: this.props.question.question });
     } else {

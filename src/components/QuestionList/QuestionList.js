@@ -30,13 +30,10 @@ class QuestionList extends Component {
       });
 
       for (let i = 0; i < newi.length; i++) {
-          console.log(newi[i].value);
           if(newi[i].value === null || newi[i].value == 100 || newi[i].value === 300 || newi[i].value === 500){
-              console.log("remove", newi[i].value);
               newi.splice(i, 1);
           }
           else{
-              console.log("good", newi[i].value);
           }
       }
 
