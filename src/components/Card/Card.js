@@ -17,6 +17,8 @@ class Card extends Component {
 
   clicking = () => {
     this.setState({ value: this.props.question.question });
+
+    this.props.pressQuestion(this.props.question);
   };
 
   render() {
