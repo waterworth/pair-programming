@@ -7,6 +7,7 @@ export default class Home extends Component {
   state = {
     categories: [],
     questions: [[]],
+    score: 0
   };
 
   componentDidMount() {
@@ -25,6 +26,7 @@ export default class Home extends Component {
     return (
       <>
         <h1 className='title'>This is Jeopardy</h1>
+        <span>{this.state.score}</span>
         <main className='board'>
           {this.state.categories.map((data, index) => {
             return <QuestionList key={data.id} category={data} />;
