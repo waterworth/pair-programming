@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import axios from "axios";
-import QuestionList from "../QuestionList/QuestionList";
+import React, { Component } from 'react';
+import axios from 'axios';
+import QuestionList from '../QuestionList/QuestionList';
+import './home.scss';
 
 export default class Home extends Component {
   state = {
@@ -17,24 +18,19 @@ export default class Home extends Component {
           categories: response.data,
           questions: this.state.questions,
         });
-      })
+      });
   }
 
   render() {
     return (
-      <div>
-        <h1>Home Screen</h1>
-        {this.state.categories.map((data, index) => {
-          return (
-            <div key={data.id}>
-              <h2>{data.title}</h2>
-              <ul>
-                <QuestionList category={data}/>
-              </ul>
-            </div>
-          );
-        })}
-      </div>
+      <>
+        <h1 className='title'>This is Jeopardy</h1>
+        <main className='board'>
+          {this.state.categories.map((data, index) => {
+            return <QuestionList key={data.id} category={data} />;
+          })}
+        </main>
+      </>
     );
   }
 }

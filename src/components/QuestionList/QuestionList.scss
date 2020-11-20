@@ -1,0 +1,21 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: 100%;
+  border: 0.5rem solid rgba(22, 16, 16, 1);
+
+  &__title {
+    text-align: center;
+    font-size: 1rem;
+    background-color: #060ce9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7rem;
+    border: 0.25rem solid rgba(22, 16, 16, 1);
+    margin: 0;
+    color: white;
+    text-transform: uppercase;
+  }
+}
