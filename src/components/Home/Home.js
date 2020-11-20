@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import axios from "axios";
-import QuestionList from "../QuestionList/QuestionList";
-import "./home.scss";
+import React, { Component } from 'react';
+import axios from 'axios';
+import QuestionList from '../QuestionList/QuestionList';
+import './home.scss';
 
 export default class Home extends Component {
   state = {
     categories: [],
     score: 0,
     currQuestion: {},
-    form: "",
-    answer: "",
+    form: '',
+    answer: '',
   };
 
   componentDidMount() {
@@ -53,7 +53,7 @@ export default class Home extends Component {
     e.preventDefault();
 
     if (this.state.currQuestion.answer) {
-      let realAnaswer = this.state.currQuestion.answer.replace("/", "");
+      let realAnaswer = this.state.currQuestion.answer.replace('/', '');
       if (
         realAnaswer.toLowerCase().includes(e.target.answer.value.toLowerCase())
       ) {
@@ -67,12 +67,12 @@ export default class Home extends Component {
     }
 
     this.setState({
-      form: "",
+      form: '',
     });
 
     setTimeout(() => {
       this.setState({
-        answer: "",
+        answer: '',
       });
     }, 10000);
   };
@@ -86,9 +86,9 @@ export default class Home extends Component {
   render() {
     return (
       <>
-        <h1 className="title">This is Jeopardy</h1>
-        <h2 className="score">Score: {this.state.score}</h2>
-        <main className="board">
+        <h1 className='title'>This is Jeopardy</h1>
+        <h2 className='score'>Score: {this.state.score}</h2>
+        <main className='board'>
           {this.state.categories.map((data, index) => {
             return (
               <QuestionList
@@ -102,17 +102,17 @@ export default class Home extends Component {
         </main>
         <form onSubmit={this.handleFormSubmit}>
           <input
-            className="home__input"
+            className='home__input'
             value={this.state.form}
-            type="text"
-            name="answer"
+            type='text'
+            name='answer'
             onChange={this.inputChange}
           />
-          <button className="home__button" type="submit">
+          <button className='home__button' type='submit'>
             Submit
           </button>
+          <span className='home__answer'>Answer: {this.state.answer}</span>
         </form>
-        <span>ANSWER: {this.state.answer}</span>
       </>
     );
   }
