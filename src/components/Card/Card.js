@@ -11,7 +11,7 @@ class Card extends Component {
     if (this.props.question.didClick) {
       this.setState({ value: this.props.question.question });
     } else {
-      this.setState({ value: "$"+this.props.question.value });
+      this.setState({ value: '$' + this.props.question.value });
     }
   }
 

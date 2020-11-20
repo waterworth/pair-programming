@@ -1,8 +1,13 @@
-.title {
+.title,
+.score {
   margin: 0;
   text-align: center;
+  color: #0a0a0a;
 }
 
 .board {
+  margin: 0 1rem;
+  margin-top: 1rem;
   display: flex;
+  gap: 1rem;
 }
