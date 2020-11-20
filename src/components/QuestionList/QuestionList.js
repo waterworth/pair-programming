@@ -10,34 +10,47 @@ class QuestionList extends Component {
 
   equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-  componentDidMount() {
+  getQuestions = (id) =>{
     axios
-      .get(`http://jservice.io/api/clues/?category=${this.props.category.id}`)
-      .then((response) => {
-        let newi = response.data;
+    .get(`http://jservice.io/api/clues/?category=${id}`)
+    .then((response) => {
+      let newi = response.data;
 
-        for (let i = 0; i < newi.length; i++) {
-          for (let x = 0; x < newi.length; x++) {
-            if (i != x && newi[i].value == newi[x].value) {
-              newi.splice(x, 1);
-            }
+      for (let i = 0; i < newi.length; i++) {
+        for (let x = 0; x < newi.length; x++) {
+          if (i != x && newi[i].value == newi[x].value) {
+            newi.splice(x, 1);
           }
         }
+      }
 
-        newi = response.data.sort(function (a, b) {
-          return a.value - b.value;
-        });
-
-        for (let i = 0; i < newi.length; i++) {
-            if(newi[i].value === null || newi[i].value == 100 || newi[i].value === 300 || newi[i].value === 500){
-                newi.splice(i, 1);
-            }
-        }
-
-        this.setState({
-          questions: newi,
-        });
+      newi = response.data.sort(function (a, b) {
+        return a.value - b.value;
       });
+
+      for (let i = 0; i < newi.length; i++) {
+          console.log(newi[i].value);
+          if(newi[i].value === null || newi[i].value == 100 || newi[i].value === 300 || newi[i].value === 500){
+              console.log("remove", newi[i].value);
+              newi.splice(i, 1);
+          }
+          else{
+              console.log("good", newi[i].value);
+          }
+      }
+
+      this.setState({
+        questions: newi,
+      });
+    })
+    .catch((err)=>{
+        this.getQuestions(id+1)
+    })
+  }
+
+
+  componentDidMount() {
+    this.getQuestions(this.props.category.id)
   }
 
   render() {
